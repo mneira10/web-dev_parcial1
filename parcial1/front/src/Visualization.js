@@ -8,11 +8,15 @@ export default class Visualization extends Component {
         
     this.state = {
       data:undefined,
-      totalRating : 0
+      ratingUsername:undefined,
+      ownRating:undefined
     };
+    this.getSum = this.getSum.bind(this);
   }
     
-
+  getSum(total, elem) {
+    return total + elem.rating;
+  }
   componentDidMount(){
     let localSpec=  this.props.visdata.spec;
     console.log("localSpec: ",localSpec.schema);
@@ -37,7 +41,18 @@ export default class Visualization extends Component {
         <h3>{this.props.visdata.title}</h3>
         <p><b>By: </b>{this.props.visdata.username}</p>
         <div ref={(div) => this.viz=div}></div>
-        <p><b>Timestamp: </b> {this.props.visdata.timestamp}</p>
+        <p><b>Rating: </b>{this.props.visdata.ratings.reduce(this.getSum,0)/this.props.visdata.ratings.length}</p>
+        <p><b>Timestamp: </b> {(new Date(this.props.visdata.timestamp * 1000)).toString()}</p>
+
+        {/* <h3>Rate the Viz</h3>
+        <label >Rating:</label>
+        <input type="number" 
+          placeholder="1-5"
+          min="1" max="5" pattern="[1-5]" onChange={(event)=>this.setState({ownRating:event.target.value})}/>
+        <br/>
+        <label >Username:</label>
+        <input type="text" onChange={(event)=>this.setState({ratingUsername:event.target.value})}/> */}
+        
       </div>
     );
   }

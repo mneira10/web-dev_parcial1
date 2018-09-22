@@ -8,7 +8,7 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state= {
-      spec : this.defaultSpec,
+      spec : undefined,
       data : undefined,
       color : "#1177BB",
       visList : [],
@@ -66,20 +66,24 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <h1>Web-dev - Parcial 1</h1>
+        <h2>Make your own vega-lite visualizations</h2>
 
-        <h1>Make your own vega visualizations!</h1>
-
-       
-        <textarea  onChange={
+        <p ><b>1.</b> Input the spec JSON here:</p>
+        <textarea  style={{width:"50%"}} onChange={
           (event)=>{
 
             this.setState({spec:event.target.value});
           
-          } } name="inputJSON" id="inputJSON" cols="100" rows="20" >
+          } } name="inputJSON" id="inputJSON"  rows="20" >
         
         </textarea>
+
+
         <br/>
-        <input type="file" onChange={(event)=> {
+        <br/>
+        <p ><b>2.</b> Choose the CSV file:</p>
+        <input className="inputfile" type="file" onChange={(event)=> {
 
           Papa.parse(event.target.files[0], {
             header: true,
@@ -91,8 +95,31 @@ class App extends Component {
         }
         }/>
         <br/>
+        <br/>
 
-        <button onClick = {()=>{
+        <p><b>(optional) </b>Choose the color of the plot:</p>
+        <input type="color" name="chooseColor" id="colorChooser" placeholder="#1177BB" onChange={(event)=>
+          this.setState({color:event.target.value})
+        } />
+
+        <br/>
+        <br/> 
+
+
+        <p ><b>3.</b> Preview the viz and save it:</p>
+        <br/>
+        <br/>
+
+        Username: <input type="text" onChange={(event)=>
+          this.setState({username:event.target.value})
+        }/><br/>
+        Title of viz: <input type="text" onChange={(event)=>
+          this.setState({titleViz:event.target.value})
+        }/>
+
+        <br/>
+        <br/>
+        <button className="button" onClick = {()=>{
                
           const embed_opt = {"mode": "vega-lite"};           
           let specJSON = null;
@@ -128,18 +155,10 @@ class App extends Component {
         
         }}>Render Viz!</button>
 
+        
         <br/>
-
-        <h3>Save your viz:</h3>
-
-        Username: <input type="text" onChange={(event)=>
-          this.setState({username:event.target.value})
-        }/><br/>
-        Title of viz: <input type="text" onChange={(event)=>
-          this.setState({titleViz:event.target.value})
-        }/><br/>
-
-        <button onClick = {()=>{
+        <br/>
+        <button className="button" onClick = {()=>{
                
           const embed_opt = {"mode": "vega-lite"};           
           let specJSON = null;
@@ -183,6 +202,7 @@ class App extends Component {
                 aMandar.spec = tempSpec;
 
                 aMandar.spec.encoding["color"] = {value:this.state.color};
+                aMandar.ratings = [];
                 // console.log(tempSpec);
                 // console.log(aMandar);
                 console.log(JSON.stringify(aMandar));
@@ -225,10 +245,7 @@ class App extends Component {
 
 
 
-        <h3>Want to get creative? Choose your color!</h3>
-        <input type="color" name="chooseColor" id="colorChooser" placeholder="#1177BB" onChange={(event)=>
-          this.setState({color:event.target.value})
-        } />
+        
 
         <div ref={(div) => this.viz=div}></div>
         
