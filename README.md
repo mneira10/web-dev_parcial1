@@ -24,7 +24,7 @@ Make sure mongodb is up and running. For linux:
 ```
 service mongod start
 ```
-Then 
+
 
 **Licence**
 
