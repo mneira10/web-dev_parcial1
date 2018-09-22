@@ -7,7 +7,7 @@
 ```
 cd parcial1
 yarn install
-yarn run
+yarn start
 ```
 
 **For the front end:**
@@ -19,6 +19,14 @@ yarn start
 ```
 
 For mongo: 
+
+Make sure mongodb is up and running. For linux:
 ```
-mongoimport -d dbname -c collectionName --jsonArray --file nameoffile
+service mongod start
 ```
+Then 
+
+**Licence**
+
+This project is licensed under the MIT license. See the ./LICENSE file for more details. 
+
